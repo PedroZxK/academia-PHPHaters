@@ -1,19 +1,16 @@
 <?php
 session_start();
-
 include '../conexao.php';
 
+$error_message = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Coleta os dados do formulário
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Valida os campos do formulário
     if (empty($email) || empty($password)) {
-        echo 'Por favor, preencha todos os campos do formulário.';
-        exit();
+        $error_message = 'Por favor, preencha todos os campos do formulário.';
     } else {
-        // Verifica se o email existe na tabela 'admins'
         $sql = "SELECT id, email, senha FROM admins WHERE email = ?";
         $stmt = $mysqli->prepare($sql);
 
@@ -22,22 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
             $stmt->bind_result($id, $dbEmail, $dbPassword);
 
-            // Se o administrador for encontrado e a senha for válida
             if ($stmt->fetch() && password_verify($password, $dbPassword)) {
-                // Cria uma sessão para o administrador
                 $_SESSION['logged_in'] = true;
                 $_SESSION['admin_id'] = $id;
                 $_SESSION['email'] = $email;
-
-                // Redireciona para a página principal do administrador (exemplo: dashboard)
                 header('Location: home_adm.php');
                 exit();
             } else {
-                echo 'Credenciais incorretas.';
+                $error_message = 'Credenciais incorretas.';
             }
             $stmt->close();
         } else {
-            echo 'Erro ao preparar a declaração: ' . $mysqli->error;
+            $error_message = 'Erro ao preparar a declaração: ' . $mysqli->error;
         }
     }
 }
@@ -52,20 +45,21 @@ $mysqli->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login de Administrador</title>
     <link rel="stylesheet" href="..\assets\css\loginadm.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
-    <!-- Incluir FontAwesome para o ícone da seta -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-
     <div class="login-container">
-    <a href="..\index.php" class="back-arrow">
-        <i class="fas fa-arrow-left"></i>
-    </a>
+        <a href="../index.php" class="back-arrow">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h1>Login de Administrador</h1>
 
         <form action="" method="POST">
+            <?php if (!empty($error_message)): ?>
+                <p class="error-message"><?= htmlspecialchars($error_message); ?></p>
+            <?php endif; ?>
+
             <label for="email">Email:</label>
             <input type="email" name="email" required>
 
@@ -73,9 +67,6 @@ $mysqli->close();
             <input type="password" name="password" required>
 
             <button type="submit">Entrar</button>
-
-            <!-- Email:admin@gmail.com 
-                Senha:12345678 -->
         </form>
     </div>
 </body>

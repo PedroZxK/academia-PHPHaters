@@ -76,3 +76,12 @@ button:hover {
 .back-arrow:hover {
     color: #afca85; /* Cor da seta ao passar o mouse */
 }
+
+
+/* Posiciona a mensagem de erro acima do botão */
+.error-message {
+    color: #ff4d4d; /* Cor vermelha para erro */
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+}
