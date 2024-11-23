@@ -52,8 +52,11 @@ $mysqli->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login de instrutor</title>
+    <link rel="stylesheet" href="..\assets\css\login_instrutor.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
 </head>
 <body>
+    <div class="login-container">
     <h1>Login de instrutor</h1>
 
     <form action="" method="POST">
@@ -65,5 +68,6 @@ $mysqli->close();
 
         <button type="submit">Entrar</button>
     </form>
+    </div>
 </body>
 </html>
