@@ -1,6 +1,7 @@
 <?php
 
-include '../conexao.php';
+include '../../conexao.php';
+include '../../validacao_instrutor.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['nome'], $_POST['idade'], $_POST['telefone'], $_POST['email'], $_POST['senha'], $_POST['data_nascimento'], $_POST['peso'], $_POST['altura'], $_POST['genero'], $_POST['expectativas'])) {
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Executando a consulta
             if ($stmt->execute()) {
-                echo '<script>alert("Aluno cadastrado com sucesso!");window.location.href=("lista_alunos.php");</script>';
+                echo '<script>alert("Aluno cadastrado com sucesso!");window.location.href=("home_instrutor.php");</script>';
             } else {
                 echo 'Erro ao realizar cadastro: ' . $stmt->error;
             }

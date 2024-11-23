@@ -1,6 +1,6 @@
 <?php
-require_once 'conexao.php';
-require_once 'validacao.php';
+include '../../conexao.php';
+include '../../validacao_instrutor.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['nome'], $_POST['tipo'], $_POST['quantidade'], $_POST['descricao'])) {

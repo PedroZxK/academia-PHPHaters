@@ -1,12 +1,9 @@
 <?php
-session_start();
+include '../../conexao.php';
+include '../../validacao_instrutor.php';
 
-include 'conexao.php';
-include 'validacao.php';
-
-
-// Consulta para pegar todos os equipamentos cadastrados
-$sql = "SELECT id, nome, tipo, descricao, data_aquisicao FROM equipamentos";
+// Consulta para pegar todos os dados dos equipamentos cadastrados
+$sql = "SELECT id, nome, tipo, quantidade, descricao FROM equipamentos";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
@@ -18,8 +15,8 @@ if ($result->num_rows > 0) {
     echo '<th>ID</th>';
     echo '<th>Nome</th>';
     echo '<th>Tipo</th>';
+    echo '<th>Quantidade</th>';
     echo '<th>Descrição</th>';
-    echo '<th>Data de Aquisição</th>';
     echo '<th>Ações</th>';
     echo '</tr>';
     echo '</thead>';
@@ -31,8 +28,8 @@ if ($result->num_rows > 0) {
         echo '<td>' . $row['id'] . '</td>';
         echo '<td>' . $row['nome'] . '</td>';
         echo '<td>' . $row['tipo'] . '</td>';
+        echo '<td>' . $row['quantidade'] . '</td>';
         echo '<td>' . $row['descricao'] . '</td>';
-        echo '<td>' . $row['data_aquisicao'] . '</td>';
         echo '<td>';
         // Links para editar ou excluir
         echo '<a href="editar_equipamento.php?id=' . $row['id'] . '">Editar</a> | ';
@@ -50,5 +47,6 @@ if ($result->num_rows > 0) {
 $mysqli->close();
 ?>
 
-<!-- Link para adicionar novo equipamento -->
+<!-- Links para adicionar novo equipamento -->
 <a href="cadastro_equipamento.php">Cadastrar Novo Equipamento</a>
+<a href="alterar_equipamentos.php">Home Alterar Equipamentos</a>

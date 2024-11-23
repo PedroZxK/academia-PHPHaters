@@ -1,6 +1,6 @@
 <?php
-require_once 'conexao.php';
-require_once 'validacao.php'; // Verifica o login do instrutor
+include '../conexao.php';
+include '../validacao_instrutor.php';
 
 // Consultas para coletar dados
 // Frequência média por turma

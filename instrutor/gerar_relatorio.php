@@ -1,12 +1,12 @@
 <?php
 // Inclui o autoload do Composer para carregar o PhpSpreadsheet
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-// Conexão com o banco de dados
-require_once 'conexao.php';
+include '../conexao.php';
+include '../validacao_instrutor.php';
 
 // Criação da planilha
 $spreadsheet = new Spreadsheet();

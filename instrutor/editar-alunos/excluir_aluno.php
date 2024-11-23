@@ -1,8 +1,6 @@
 <?php
-session_start();
-
-include 'conexao.php';
-include 'validacao.php';
+include '../../conexao.php';
+include '../../validacao_instrutor.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
