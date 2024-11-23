@@ -11,9 +11,13 @@ include '../validacao_aluno.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios</title>
     <link rel="stylesheet" href="../assets/css/relatorios.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
 </head>
 <body>
+<a href="home_instrutores.php" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
     <h1>Seleção de Relatórios</h1>
 
     <form action="gerar_relatorio.php" method="GET">
