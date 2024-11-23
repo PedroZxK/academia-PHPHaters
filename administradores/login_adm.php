@@ -51,20 +51,32 @@ $mysqli->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login de Administrador</title>
+    <link rel="stylesheet" href="..\assets\css\loginadm.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
+    <!-- Incluir FontAwesome para o ícone da seta -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Login de Administrador</h1>
 
-    <form action="" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
 
-        <label for="password">Senha:</label>
-        <input type="password" name="password" required><br>
+    <div class="login-container">
+    <a href="..\index.php" class="back-arrow">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+        <h1>Login de Administrador</h1>
 
-        <button type="submit">Entrar</button>
-    </form>
+        <form action="" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
 
-    <a href="recuperar_senha.php">Esqueceu a senha?</a>
+            <label for="password">Senha:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+
+            <!-- Email:admin@gmail.com 
+                Senha:12345678 -->
+        </form>
+    </div>
 </body>
 </html>

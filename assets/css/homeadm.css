@@ -1,0 +1,67 @@
+/* Resetando margens e padding para garantir consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Fundo claro */
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container para o conteúdo */
+.container {
+    background-color: #ffffff; /* Cor do fundo do contêiner */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Título */
+h1 {
+    font-size: 24px;
+    color: #2a2a2a;
+    margin-bottom: 30px;
+}
+
+/* Container dos botões */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo dos botões */
+.button {
+    padding: 15px;
+    background-color: #4CAF50; /* Verde */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+/* Botão de logout com estilo diferenciado */
+.logout {
+    background-color: #f44336; /* Vermelho para o botão de logout */
+}
+
+.logout:hover {
+    background-color: #e53935;
+}
