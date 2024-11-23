@@ -1,82 +1,64 @@
 <?php
-require_once 'conexao.php';
+include '../conexao.php'; // Conexão com o banco de dados
 
-// Função para enviar alerta por e-mail para o instrutor
-function enviarAlertaInstrutor($emailInstrutor, $mensagem) {
-    $assunto = "Alerta Automático: Notificação de Turma";
-    $headers = "From: sistema@example.com\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+// Definição dos limites para disparar alertas
+$frequencia_limite = 75; // Frequência mínima aceitável em porcentagem
+$desempenho_limite = 60; // Nota média mínima aceitável
+$feedback_limite = 5;    // Número mínimo de feedbacks por turma
+
+// Função para enviar alertas por e-mail
+function enviarAlerta($emailInstrutor, $mensagem) {
+    $assunto = "Alerta Automático do Sistema";
+    $headers = "From: no-reply@sistema.com";
 
     if (mail($emailInstrutor, $assunto, $mensagem, $headers)) {
-        echo "Alerta enviado para o instrutor: $emailInstrutor\n";
+        echo "Alerta enviado para $emailInstrutor: $mensagem <br>";
     } else {
-        echo "Falha ao enviar alerta para o instrutor: $emailInstrutor\n";
+        echo "Erro ao enviar alerta para $emailInstrutor <br>";
     }
 }
 
-// Critérios de alerta
-$frequenciaMinima = 75;  // Frequência mínima aceitável
-$minimoFeedbacks = 3;    // Mínimo de feedbacks por aluno
-$notaMinima = 6;         // Nota mínima para desempenho
+// Consulta para buscar instrutores e suas turmas
+$sqlInstrutores = "SELECT i.id AS instrutor_id, i.email AS instrutor_email, t.id AS turma_id, t.nome AS turma_nome
+                   FROM instrutores i
+                   JOIN turmas t ON t.instrutor_id = i.id";
+$resultInstrutores = $mysqli->query($sqlInstrutores);
 
-// Consulta para verificar alertas em cada turma
-$sqlTurmas = "
-    SELECT t.id AS turma_id, t.nome AS turma_nome, i.id AS instrutor_id, i.email AS instrutor_email
-    FROM turmas t
-    JOIN instrutores i ON t.instrutor_id = i.id
-";
-$resultTurmas = $mysqli->query($sqlTurmas);
+while ($instrutor = $resultInstrutores->fetch_assoc()) {
+    $instrutorEmail = $instrutor['instrutor_email'];
+    $turmaId = $instrutor['turma_id'];
+    $turmaNome = $instrutor['turma_nome'];
 
-if ($resultTurmas) {
-    while ($turma = $resultTurmas->fetch_assoc()) {
-        $turmaId = $turma['turma_id'];
-        $instrutorEmail = $turma['instrutor_email'];
-        
-        // Verificação de baixa frequência
-        $sqlFrequencia = "
-            SELECT AVG(frequencia) AS media_frequencia
-            FROM alunos
-            WHERE turma_id = $turmaId
-        ";
-        $resultFrequencia = $mysqli->query($sqlFrequencia);
-        $frequencia = $resultFrequencia->fetch_assoc()['media_frequencia'];
+    // Verificação de frequência média
+    $sqlFrequencia = "SELECT AVG(frequencia) AS frequencia_media FROM alunos WHERE turma_id = $turmaId";
+    $resultFrequencia = $mysqli->query($sqlFrequencia);
+    $frequenciaMedia = $resultFrequencia->fetch_assoc()['frequencia_media'];
 
-        if ($frequencia < $frequenciaMinima) {
-            $mensagem = "Alerta: A turma '{$turma['turma_nome']}' apresenta baixa frequência média de alunos ({$frequencia}%).";
-            enviarAlertaInstrutor($instrutorEmail, $mensagem);
-        }
-
-        // Verificação de falta de feedback
-        $sqlFeedback = "
-            SELECT COUNT(*) AS total_feedbacks
-            FROM feedbacks
-            WHERE turma_id = $turmaId
-        ";
-        $resultFeedback = $mysqli->query($sqlFeedback);
-        $totalFeedbacks = $resultFeedback->fetch_assoc()['total_feedbacks'];
-
-        if ($totalFeedbacks < $minimoFeedbacks) {
-            $mensagem = "Alerta: A turma '{$turma['turma_nome']}' apresenta falta de feedback dos alunos.";
-            enviarAlertaInstrutor($instrutorEmail, $mensagem);
-        }
-
-        // Verificação de baixo desempenho
-        $sqlDesempenho = "
-            SELECT AVG(nota) AS media_notas
-            FROM desempenho
-            WHERE turma_id = $turmaId
-        ";
-        $resultDesempenho = $mysqli->query($sqlDesempenho);
-        $mediaNotas = $resultDesempenho->fetch_assoc()['media_notas'];
-
-        if ($mediaNotas < $notaMinima) {
-            $mensagem = "Alerta: A turma '{$turma['turma_nome']}' apresenta baixo desempenho geral dos alunos (média de notas: {$mediaNotas}).";
-            enviarAlertaInstrutor($instrutorEmail, $mensagem);
-        }
+    if ($frequenciaMedia < $frequencia_limite) {
+        $mensagem = "Alerta: A frequência média da turma '$turmaNome' está abaixo de $frequencia_limite%.";
+        enviarAlerta($instrutorEmail, $mensagem);
     }
-} else {
-    echo "Erro ao buscar turmas: " . $mysqli->error;
+
+    // Verificação de desempenho médio
+    $sqlDesempenho = "SELECT AVG(desempenho) AS desempenho_medio FROM alunos WHERE turma_id = $turmaId";
+    $resultDesempenho = $mysqli->query($sqlDesempenho);
+    $desempenhoMedio = $resultDesempenho->fetch_assoc()['desempenho_medio'];
+
+    if ($desempenhoMedio < $desempenho_limite) {
+        $mensagem = "Alerta: O desempenho médio da turma '$turmaNome' está abaixo de $desempenho_limite%.";
+        enviarAlerta($instrutorEmail, $mensagem);
+    }
+
+    // Verificação de feedbacks
+    $sqlFeedbacks = "SELECT COUNT(*) AS total_feedbacks FROM feedbacks WHERE turma_id = $turmaId";
+    $resultFeedbacks = $mysqli->query($sqlFeedbacks);
+    $totalFeedbacks = $resultFeedbacks->fetch_assoc()['total_feedbacks'];
+
+    if ($totalFeedbacks < $feedback_limite) {
+        $mensagem = "Alerta: A turma '$turmaNome' recebeu menos de $feedback_limite feedbacks dos alunos.";
+        enviarAlerta($instrutorEmail, $mensagem);
+    }
 }
 
-$mysqli->close();
+echo "Verificação de alertas concluída.";
 ?>

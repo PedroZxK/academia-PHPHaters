@@ -1,66 +1,76 @@
 <?php
-// Inclui o autoload do Composer para carregar o PhpSpreadsheet
-require '../vendor/autoload.php';
+include '../conexao.php';
+include '../validacao_aluno.php';
+require '../vendor/autoload.php'; // Caminho para o autoload do PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-include '../conexao.php';
-include '../validacao_instrutor.php';
+$tipo_relatorio = $_GET['tipo_relatorio'] ?? '';
 
-// Criação da planilha
+if (!$tipo_relatorio) {
+    die('Tipo de relatório não especificado.');
+}
+
+// Cria uma nova planilha
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
-$sheet->setTitle('Relatório de Presença');
 
-// Configuração de cabeçalhos das colunas
-$sheet->setCellValue('A1', 'ID do Aluno');
-$sheet->setCellValue('B1', 'Nome');
-$sheet->setCellValue('C1', 'Presenças');
-$sheet->setCellValue('D1', 'Desempenho');
+// Define o título da planilha
+switch ($tipo_relatorio) {
+    case 'presenca':
+        $sheet->setCellValue('A1', 'Relatório de Presença dos Alunos');
+        // Exemplo de consulta para presença
+        $sql = "SELECT nome, frequencia FROM alunos";
+        $resultado = $mysqli->query($sql);
+        $row = 2; // Começa a preencher da linha 2
 
-// Estilização dos cabeçalhos (opcional)
-$headerStyle = [
-    'font' => ['bold' => true],
-    'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
-    'borders' => ['allBorders' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN]]
-];
-$sheet->getStyle('A1:D1')->applyFromArray($headerStyle);
+        while ($aluno = $resultado->fetch_assoc()) {
+            $sheet->setCellValue('A' . $row, $aluno['nome']);
+            $sheet->setCellValue('B' . $row, $aluno['frequencia']);
+            $row++;
+        }
+        break;
 
-// Consulta ao banco de dados para obter os dados dos alunos
-$sql = "SELECT id, nome, presencas, desempenho FROM alunos";
-$result = $mysqli->query($sql);
+    case 'atividades':
+        $sheet->setCellValue('A1', 'Relatório de Atividades Realizadas');
+        // Exemplo de consulta para atividades
+        $sql = "SELECT nome, atividade, data_realizada FROM atividades";
+        $resultado = $mysqli->query($sql);
+        $row = 2;
 
-// Verifica se há resultados
-if ($result->num_rows > 0) {
-    $row = 2; // Início da linha para dados (abaixo dos cabeçalhos)
+        while ($atividade = $resultado->fetch_assoc()) {
+            $sheet->setCellValue('A' . $row, $atividade['nome']);
+            $sheet->setCellValue('B' . $row, $atividade['atividade']);
+            $sheet->setCellValue('C' . $row, $atividade['data_realizada']);
+            $row++;
+        }
+        break;
 
-    while ($data = $result->fetch_assoc()) {
-        $sheet->setCellValue('A' . $row, $data['id']);
-        $sheet->setCellValue('B' . $row, $data['nome']);
-        $sheet->setCellValue('C' . $row, $data['presencas']);
-        $sheet->setCellValue('D' . $row, $data['desempenho']);
-        $row++;
-    }
-} else {
-    echo 'Nenhum dado encontrado.';
-    exit();
+    case 'desempenho':
+        $sheet->setCellValue('A1', 'Relatório de Desempenho dos Alunos');
+        // Exemplo de consulta para desempenho
+        $sql = "SELECT nome, desempenho FROM alunos";
+        $resultado = $mysqli->query($sql);
+        $row = 2;
+
+        while ($aluno = $resultado->fetch_assoc()) {
+            $sheet->setCellValue('A' . $row, $aluno['nome']);
+            $sheet->setCellValue('B' . $row, $aluno['desempenho']);
+            $row++;
+        }
+        break;
+
+    default:
+        die('Tipo de relatório inválido.');
 }
 
-// Ajuste automático das larguras das colunas (opcional)
-foreach (range('A', 'D') as $col) {
-    $sheet->getColumnDimension($col)->setAutoSize(true);
-}
-
-// Define o nome do arquivo
-$filename = 'relatorio_presenca.xlsx';
-
-// Configurações de cabeçalho para download do arquivo
+// Define o cabeçalho para download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="' . $filename . '"');
+header('Content-Disposition: attachment;filename="relatorio_' . $tipo_relatorio . '.xlsx"');
 header('Cache-Control: max-age=0');
 
-// Gera e baixa o arquivo Excel
+// Salva o arquivo Excel e faz o download
 $writer = new Xlsx($spreadsheet);
 $writer->save('php://output');
 exit();

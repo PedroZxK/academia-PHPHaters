@@ -3,6 +3,7 @@ include '../conexao.php';
 include '../validacao_instrutor.php';
 
 // Consultas para coletar dados
+
 // Frequência média por turma
 $sqlFrequencia = "SELECT t.nome AS turma, AVG(a.frequencia) AS frequencia_media 
                   FROM turmas t
@@ -11,9 +12,9 @@ $sqlFrequencia = "SELECT t.nome AS turma, AVG(a.frequencia) AS frequencia_media
 $resultFrequencia = $mysqli->query($sqlFrequencia);
 
 // Desempenho médio (notas) por turma
-$sqlDesempenho = "SELECT t.nome AS turma, AVG(d.nota) AS media_notas 
+$sqlDesempenho = "SELECT t.nome AS turma, AVG(a.desempenho) AS media_desempenho 
                   FROM turmas t
-                  JOIN desempenho d ON t.id = d.turma_id
+                  JOIN alunos a ON t.id = a.turma_id
                   GROUP BY t.id";
 $resultDesempenho = $mysqli->query($sqlDesempenho);
 
@@ -24,33 +25,21 @@ $sqlFeedbacks = "SELECT t.nome AS turma, COUNT(f.id) AS total_feedbacks
                  GROUP BY t.id";
 $resultFeedbacks = $mysqli->query($sqlFeedbacks);
 
-// Número de acessos ao sistema (últimos 30 dias)
-$sqlAcessos = "SELECT DATE(acesso_data) AS dia, COUNT(*) AS total_acessos
-               FROM acessos_sistema
-               WHERE acesso_data >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-               GROUP BY DATE(acesso_data)";
-$resultAcessos = $mysqli->query($sqlAcessos);
-
 // Converte os dados em arrays para o Chart.js
 $frequenciaData = [];
 $desempenhoData = [];
 $feedbackData = [];
-$acessosData = [];
 
 while ($row = $resultFrequencia->fetch_assoc()) {
     $frequenciaData[] = ['turma' => $row['turma'], 'frequencia' => $row['frequencia_media']];
 }
 
 while ($row = $resultDesempenho->fetch_assoc()) {
-    $desempenhoData[] = ['turma' => $row['turma'], 'nota_media' => $row['media_notas']];
+    $desempenhoData[] = ['turma' => $row['turma'], 'nota_media' => $row['media_desempenho']];
 }
 
 while ($row = $resultFeedbacks->fetch_assoc()) {
     $feedbackData[] = ['turma' => $row['turma'], 'feedbacks' => $row['total_feedbacks']];
-}
-
-while ($row = $resultAcessos->fetch_assoc()) {
-    $acessosData[] = ['dia' => $row['dia'], 'acessos' => $row['total_acessos']];
 }
 ?>
 
@@ -78,11 +67,6 @@ while ($row = $resultAcessos->fetch_assoc()) {
     <section>
         <h2>Total de Feedbacks por Turma</h2>
         <canvas id="feedbackChart"></canvas>
-    </section>
-
-    <section>
-        <h2>Acessos ao Sistema nos Últimos 30 Dias</h2>
-        <canvas id="acessosChart"></canvas>
     </section>
 
     <script>
@@ -143,26 +127,6 @@ while ($row = $resultAcessos->fetch_assoc()) {
                     ]
                 }]
             }
-        });
-
-        // Dados para o gráfico de acessos
-        const acessosLabels = <?php echo json_encode(array_column($acessosData, 'dia')); ?>;
-        const acessosValores = <?php echo json_encode(array_column($acessosData, 'acessos')); ?>;
-
-        const acessosChart = new Chart(document.getElementById('acessosChart'), {
-            type: 'line',
-            data: {
-                labels: acessosLabels,
-                datasets: [{
-                    label: 'Acessos Diários',
-                    data: acessosValores,
-                    backgroundColor: 'rgba(75, 192, 192, 0.4)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: { scales: { y: { beginAtZero: true } } }
         });
     </script>
 </body>

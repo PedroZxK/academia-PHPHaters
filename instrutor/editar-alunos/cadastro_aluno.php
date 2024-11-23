@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Executando a consulta
             if ($stmt->execute()) {
-                echo '<script>alert("Aluno cadastrado com sucesso!");window.location.href=("home_instrutor.php");</script>';
+                echo '<script>alert("Aluno cadastrado com sucesso!");window.location.href=("../home_instrutores.php");</script>';
             } else {
                 echo 'Erro ao realizar cadastro: ' . $stmt->error;
             }
