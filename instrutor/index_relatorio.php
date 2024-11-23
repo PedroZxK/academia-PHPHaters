@@ -10,6 +10,8 @@ include '../validacao_aluno.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios</title>
+    <link rel="stylesheet" href="../assets/css/relatorios.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
 </head>
 <body>
     <h1>Seleção de Relatórios</h1>

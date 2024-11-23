@@ -50,6 +50,8 @@ while ($row = $resultFeedbacks->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Analítico</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../assets/css/dashboard_analitico.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
 </head>
 <body>
     <h1>Dashboard Analítico</h1>
