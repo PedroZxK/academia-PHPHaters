@@ -6,9 +6,8 @@ $sql = "SELECT id, nome, email, telefone, data_nascimento FROM instrutores";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
-    // Exibe os dados dos instrutores
     echo '<h1>Lista de Instrutores</h1>';
-    echo '<table border="1">';
+    echo '<table>';
     echo '<thead>';
     echo '<tr>';
     echo '<th>ID</th>';
@@ -21,7 +20,6 @@ if ($result->num_rows > 0) {
     echo '</thead>';
     echo '<tbody>';
 
-    // Exibe cada instrutor
     while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row['id'] . '</td>';
@@ -30,9 +28,8 @@ if ($result->num_rows > 0) {
         echo '<td>' . $row['telefone'] . '</td>';
         echo '<td>' . $row['data_nascimento'] . '</td>';
         echo '<td>';
-        // Links para editar ou excluir
-        echo '<a href="editar-instrutor/editar_instrutor.php?id=' . $row['id'] . '">Editar</a> | ';
-        echo '<a href="editar-instrutor/excluir_instrutor.php?id=' . $row['id'] . '" onclick="return confirm(\'Tem certeza que deseja excluir este instrutor?\')">Excluir</a>';
+        echo '<a href="editar-instrutor/editar_instrutor.php?id=' . $row['id'] . '" class="action-btn edit-btn">Editar</a> ';
+        echo '<a href="editar-instrutor/excluir_instrutor.php?id=' . $row['id'] . '" onclick="return confirm(\'Tem certeza que deseja excluir este instrutor?\')" class="action-btn delete-btn">Excluir</a>';
         echo '</td>';
         echo '</tr>';
     }
@@ -45,7 +42,18 @@ if ($result->num_rows > 0) {
 
 $mysqli->close();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\assets\css\lista_intrutores.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
+    <title>Lista de instrutores</title>
+</head>
+<body>
+<a href="cadastro_instrutor.php" class="add-btn">Cadastrar Novo Instrutor</a>
+<a href="../logout.php" class="logout-btn">Sair</a>
+</body>
+</html>
 
-<!-- Link para adicionar novo instrutor -->
-<a href="cadastro_instrutor.php">Cadastrar Novo Instrutor</a>
-<a href="../logout.php">sair</a>

@@ -5,43 +5,35 @@ include '../../validacao_adm.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Obtém os dados do instrutor a ser editado
     $stmt = $mysqli->prepare("SELECT nome, email, telefone, data_nascimento FROM instrutores WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->bind_result($nome, $email, $telefone, $data_nascimento);
     
     if ($stmt->fetch()) {
-        // Exibe o formulário com os dados atuais do instrutor
         echo '<h1>Editar Instrutor</h1>';
         echo '<form action="atualizar_instrutor.php" method="POST">';
         echo '<input type="hidden" name="id" value="' . $id . '">';
         
-        // Campo para editar o nome
         echo '<label for="nome">Nome:</label>';
         echo '<input type="text" name="nome" value="' . $nome . '" required><br>';
         
-        // Campo para editar o e-mail
         echo '<label for="email">Email:</label>';
         echo '<input type="email" name="email" value="' . $email . '" required><br>';
         
-        // Campo para editar o telefone
         echo '<label for="telefone">Telefone:</label>';
         echo '<input type="text" name="telefone" value="' . $telefone . '" required><br>';
         
-        // Campo para editar a data de nascimento
         echo '<label for="data_nascimento">Data de Nascimento:</label>';
         echo '<input type="date" name="data_nascimento" value="' . $data_nascimento . '" required><br>';
         
-        // Campo para alterar a senha
         echo '<label for="senha">Nova Senha:</label>';
         echo '<input type="password" name="senha"><br>';
         
-        // Confirmação de senha
         echo '<label for="confirmar_senha">Confirmar Nova Senha:</label>';
         echo '<input type="password" name="confirmar_senha"><br>';
         
-        echo '<button type="submit">Atualizar</button>';
+        echo '<button type="submit" class="btn-submit">Atualizar</button>';
         echo '</form>';
     } else {
         echo 'Instrutor não encontrado.';
@@ -52,3 +44,20 @@ if (isset($_GET['id'])) {
 
 $mysqli->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\assets\css\editarlista_intrutores.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Editar - Lista de instrutores</title>
+</head>
+<body>
+    <a href="home_adm.php" class="back-button">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+</body>
+</html>

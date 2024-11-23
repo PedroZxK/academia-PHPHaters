@@ -13,6 +13,22 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../img/academiaimg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(5px); 
+    z-index: -1; 
 }
 
 /* Container para o conteúdo */
@@ -43,7 +59,7 @@ h1 {
 /* Estilo dos botões */
 .button {
     padding: 15px;
-    background-color: #4CAF50; /* Verde */
+    background-color: #111; /* Verde */
     color: #ffffff;
     text-decoration: none;
     font-size: 16px;
@@ -54,7 +70,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: #222222;
 }
 
 /* Botão de logout com estilo diferenciado */

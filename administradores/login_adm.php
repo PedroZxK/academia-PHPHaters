@@ -53,16 +53,9 @@ $mysqli->close();
     <title>Login de Administrador</title>
     <link rel="stylesheet" href="..\assets\css\loginadm.css">
     <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
-    <!-- Incluir FontAwesome para o ícone da seta -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-
     <div class="login-container">
-    <a href="..\index.php" class="back-arrow">
-        <i class="fas fa-arrow-left"></i>
-    </a>
         <h1>Login de Administrador</h1>
 
         <form action="" method="POST">
@@ -74,9 +67,10 @@ $mysqli->close();
 
             <button type="submit">Entrar</button>
 
-            <!-- Email:admin@gmail.com 
-                Senha:12345678 -->
+                    <!-- Email:admin@gmail.com 
+                        Senha:12345678 -->
         </form>
+
     </div>
 </body>
 </html>

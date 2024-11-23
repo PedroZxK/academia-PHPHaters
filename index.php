@@ -12,6 +12,8 @@ include 'conexao.php';
 </head>
 <body>
     <div class="login-container">
+        <!-- Logo acima do título -->
+        <img src="assets/img/logo.png" alt="Logo" class="logo">
         <h1>O que você deseja fazer?</h1>
         <a href="administradores/login_adm.php">Login de ADM</a>
         <a href="aluno/login_alunos.php">Login de aluno</a>
