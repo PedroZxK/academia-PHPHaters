@@ -1,0 +1,84 @@
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../img/academia3.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(5px); 
+    z-index: -1; 
+}
+
+/* Container Principal */
+.container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Título */
+h1 {
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+/* Parágrafo */
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Menu de Opções */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Links */
+.menu a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn {
+    background-color: #000;
+}
+
+.btn:hover {
+    background-color: #111;
+}
+
+/* Link de Logout */
+.logout {
+    background-color: #ff6b6b;
+}
+
+.logout:hover {
+    background-color: #e25555;
+}
