@@ -2,6 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: aluno/login_alunos.php);
+    header('Location: aluno/login_alunos.php');
     exit();
 }

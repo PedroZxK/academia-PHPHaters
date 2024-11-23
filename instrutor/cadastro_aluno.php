@@ -1,15 +1,6 @@
 <?php
-require_once 'conexao.php';
-require_once 'validacao.php';
 
-// Inicia a sessão
-session_start();
-
-// Verifica se o usuário está logado e se é instrutor ou administrador
-if (!isset($_SESSION['usuario_id']) || !in_array($_SESSION['tipo_usuario'], ['instrutor', 'administrador'])) {
-    echo '<script>alert("Acesso restrito! Apenas instrutores e administradores podem acessar esta página.");window.location.href="login.php";</script>';
-    exit();
-}
+include '../conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['nome'], $_POST['idade'], $_POST['telefone'], $_POST['email'], $_POST['senha'], $_POST['data_nascimento'], $_POST['peso'], $_POST['altura'], $_POST['genero'], $_POST['expectativas'])) {

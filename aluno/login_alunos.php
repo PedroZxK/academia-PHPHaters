@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['nome'] = $dbEmail; // Para exibir o nome do aluno (se necessário)
 
                 // Redireciona para a página principal do aluno (exemplo: dashboard)
-                header('Location: aluno_dashboard.php');
+                header('Location: home_aluno.php');
                 exit();
             } else {
                 echo 'Credenciais incorretas.';
