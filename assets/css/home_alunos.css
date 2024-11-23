@@ -1,0 +1,64 @@
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../img/academiaimg2.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(5px); 
+    z-index: -1; 
+}
+
+.home-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+
+h1 {
+    font-size: 20px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.home-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.home-links a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.lista {
+    background-color: #4caf50;
+}
+
+.sair {
+    background-color: red;
+}

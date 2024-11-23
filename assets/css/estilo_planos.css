@@ -1,0 +1,83 @@
+/* Estilização geral */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+}
+
+/* Título */
+h1 {
+    margin-top: 20px;
+    font-size: 24px;
+    color: #000000;
+}
+
+/* Tabela */
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 90%;
+    background: #fff;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #c5e19b;
+    color: #020202;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Botão */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #80a053;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #5753c9;
+}
+
+
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    color: #4CAF50;
+}
