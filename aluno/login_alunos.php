@@ -3,17 +3,15 @@ session_start();
 
 include '../conexao.php';
 
+$error_message = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Coleta os dados do formulário
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Valida os campos do formulário
     if (empty($email) || empty($password)) {
-        echo 'Por favor, preencha todos os campos do formulário.';
-        exit();
+        $error_message = 'Por favor, preencha todos os campos do formulário.';
     } else {
-        // Verifica se o email existe na tabela 'alunos'
         $sql = "SELECT id, email, senha FROM alunos WHERE email = ?";
         $stmt = $mysqli->prepare($sql);
 
@@ -22,23 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
             $stmt->bind_result($id, $dbEmail, $dbPassword);
 
-            // Se o aluno for encontrado e a senha for válida
             if ($stmt->fetch() && password_verify($password, $dbPassword)) {
-                // Cria uma sessão para o aluno
                 $_SESSION['logged_in'] = true;
                 $_SESSION['aluno_id'] = $id;
                 $_SESSION['email'] = $email;
-                $_SESSION['nome'] = $dbEmail; // Para exibir o nome do aluno (se necessário)
+                $_SESSION['nome'] = $dbEmail;
 
-                // Redireciona para a página principal do aluno (exemplo: dashboard)
                 header('Location: home_aluno.php');
                 exit();
             } else {
-                echo 'Credenciais incorretas.';
+                $error_message = 'Credenciais incorretas.';
             }
             $stmt->close();
         } else {
-            echo 'Erro ao preparar a declaração: ' . $mysqli->error;
+            $error_message = 'Erro ao preparar a declaração: ' . $mysqli->error;
         }
     }
 }
@@ -53,12 +48,21 @@ $mysqli->close();
     <title>Login de Aluno</title>
     <link rel="stylesheet" href="..\assets\css\login_alunos.css">
     <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="login-container">
+        <!-- Botão de voltar -->
+        <a href="../index.php" class="back-arrow">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h1>Login de Aluno</h1>
 
         <form action="" method="POST" class="login-form">
+            <?php if (!empty($error_message)): ?>
+                <p class="error-message"><?= htmlspecialchars($error_message); ?></p>
+            <?php endif; ?>
+
             <label for="email">Email:</label>
             <input type="email" name="email" required>
 

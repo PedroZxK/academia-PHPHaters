@@ -167,7 +167,7 @@ a:hover {
 </style>
 <body>
     <a href="../lista_instrutor.php" class="back-button">
-        <i class="fas fa-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> 
     </a>
 </body>
 </html>
