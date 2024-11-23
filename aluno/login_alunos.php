@@ -45,28 +45,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $mysqli->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login de Aluno</title>
+    <link rel="stylesheet" href="..\assets\css\login_alunos.css">
+    <link rel="shortcut icon" href="..\assets\img\logourl.png" type="image/x-icon">
 </head>
 <body>
-    <h1>Login de Aluno</h1>
+    <div class="login-container">
+        <h1>Login de Aluno</h1>
 
-    <form action="" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
+        <form action="" method="POST" class="login-form">
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
 
-        <label for="password">Senha:</label>
-        <input type="password" name="password" required><br>
+            <label for="password">Senha:</label>
+            <input type="password" name="password" required>
 
-        <button type="submit">Entrar</button>
-    </form>
+            <button type="submit">Entrar</button>
+        </form>
 
-    <a href="cadastro_aluno.php">Cadastrar como Aluno</a>
-    <a href="recuperar_senha.php">Esqueceu a senha?</a>
+        <div class="links">
+            <a href="recuperar_senha.php">Esqueceu a senha?</a>
+        </div>
+    </div>
 </body>
 </html>
