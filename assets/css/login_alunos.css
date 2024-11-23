@@ -23,12 +23,14 @@ h1 {
 
 /* Estilo do contêiner de login */
 .login-container {
-    background-color: #fff;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 46px;
+    padding-top: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 40vw;
 }
 
 .login-form {
@@ -84,4 +86,68 @@ button:hover {
 
 .links a:hover {
     text-decoration: underline;
+}
+
+
+/* Estilo do botão de seta dentro do quadrado */
+.back-arrow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: #333333; /* Cor da seta */
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.back-arrow:hover {
+    color: #afca85; /* Cor da seta ao passar o mouse */
+}
+
+/* Estilo da mensagem de erro */
+.error-message {
+    color: #ff4d4d; /* Cor vermelha para erro */
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+/* Estilo do botão de seta dentro do quadrado */
+.back-arrow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: #333333; /* Cor da seta */
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.back-arrow:hover {
+    color: #afca85; /* Cor da seta ao passar o mouse */
+}
+
+/* Estilo da mensagem de erro */
+.error-message {
+    color: #ff4d4d; /* Cor vermelha para erro */
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Ajustes no container para incluir a seta */
+.login-container {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 45px;
+    padding-top: 60px; /* Espaço para a seta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
 }

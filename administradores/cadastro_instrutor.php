@@ -10,7 +10,7 @@
 </head>
 <body>
     <a href="home_adm.php" class="back-button">
-        <i class="fas fa-arrow-left"></i> Voltar
+        <i class="fas fa-arrow-left"></i> 
     </a>
 
     <div>

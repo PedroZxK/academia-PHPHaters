@@ -67,6 +67,8 @@ $mysqli->close();
             <input type="password" name="password" required>
 
             <button type="submit">Entrar</button>
+
+            <!-- Email: admin@gmail.com Senha:12345678 -->
         </form>
     </div>
 </body>
